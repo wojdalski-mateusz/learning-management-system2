@@ -5,13 +5,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
+
 public class Lesson {
 
     private Long id;
 
     private String subject;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DATE)
     private LocalDate date;
 
     private String description;
