@@ -1,14 +1,23 @@
 package pl.wojdalski.learningmanagementsystem2.model;
 
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
+import static javax.persistence.GenerationType.IDENTITY;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
+@Entity
 public class Lesson {
 
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String subject;
     @DateTimeFormat(iso = DATE)
@@ -20,6 +29,9 @@ public class Lesson {
         this.subject = subject;
         this.date = date;
         this.description = description;
+    }
+
+    public Lesson() {
     }
 
     public Long getId() {

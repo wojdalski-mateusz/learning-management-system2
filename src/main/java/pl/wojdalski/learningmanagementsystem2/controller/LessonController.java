@@ -1,7 +1,9 @@
 package pl.wojdalski.learningmanagementsystem2.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.wojdalski.learningmanagementsystem2.model.Lesson;
+import pl.wojdalski.learningmanagementsystem2.service.LessonService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +15,9 @@ import java.util.List;
 public class LessonController {
 
     private List<Lesson> lessons;
+
+    @Autowired
+    private LessonService lessonService;
 
     public LessonController() {
         lessons = new ArrayList<>(Arrays.asList(
@@ -26,18 +31,26 @@ public class LessonController {
     }
 
     @GetMapping
-    public List<Lesson> getAll() {
-        return lessons;
+    public List<Lesson> getAllLessons() {
+        return lessonService.findAll();
     }
 
+//    @PostMapping
+//    public Lesson post(@RequestBody Lesson lesson) {
+////        long nextId = lessons.stream()
+////                .mapToLong(Lesson::getId)
+////                .max()
+////                .orElse(0) + 1;
+////        lesson.setId(nextId);
+//        lessons.add(lesson);
+//        return lesson;
+//    }
+
     @PostMapping
-    public Lesson post(@RequestBody Lesson lesson) {
-        long nextId = lessons.stream()
-                .mapToLong(Lesson::getId)
-                .max()
-                .orElse(0) + 1;
-        lesson.setId(nextId);
-        lessons.add(lesson);
+    public Lesson addLesson(@RequestBody Lesson lesson) {
+
+        lessonService.save(lesson);
+
         return lesson;
     }
 }
