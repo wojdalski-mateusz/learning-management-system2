@@ -1,8 +1,6 @@
 package pl.wojdalski.learningmanagementsystem2.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.wojdalski.learningmanagementsystem2.model.Lesson;
 
 import java.time.LocalDate;
@@ -30,6 +28,17 @@ public class LessonController {
     @GetMapping
     public List<Lesson> getAll() {
         return lessons;
+    }
+
+    @PostMapping
+    public Lesson post(@RequestBody Lesson lesson) {
+        long nextId = lessons.stream()
+                .mapToLong(Lesson::getId)
+                .max()
+                .orElse(0) + 1;
+        lesson.setId(nextId);
+        lessons.add(lesson);
+        return lesson;
     }
 }
 
